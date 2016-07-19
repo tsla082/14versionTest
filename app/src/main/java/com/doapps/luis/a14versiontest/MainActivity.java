@@ -1,42 +1,33 @@
 package com.doapps.luis.a14versiontest;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.ChartData;
+import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.util.ChartUtils;
-import lecho.lib.hellocharts.view.Chart;
-import lecho.lib.hellocharts.view.LineChartView;
 
-//import im.dacer.androidcharts.LineView;
+import lecho.lib.hellocharts.view.ColumnChartView;
+import lecho.lib.hellocharts.view.LineChartView;
 
 public class MainActivity extends AppCompatActivity {
 
     private LineChartView line_chart_view;
     private LineChartData data;
+    public final static String[] days = new String[]{"Mon", "Tue", "Wen", "Thu", "Fri", "Sat", "Sun",};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /**
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,18 +46,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+
         line_chart_view = (LineChartView) findViewById(R.id.chart);
 
-         List<Line> lines = new ArrayList<Line>();
+        List<AxisValue> axisValues = new ArrayList<AxisValue>();
+        axisValues.add(new AxisValue(0).setLabel("A"));
+        axisValues.add(new AxisValue(1).setLabel("B"));
+        axisValues.add(new AxisValue(2).setLabel("C"));
+        axisValues.add(new AxisValue(3).setLabel("D"));
+        axisValues.add(new AxisValue(4).setLabel("E"));
+        axisValues.add(new AxisValue(5).setLabel("E"));
+        axisValues.add(new AxisValue(6).setLabel("E"));
+        axisValues.add(new AxisValue(7).setLabel("E"));
+
+
+        List<Line> lines = new ArrayList<Line>();
 
         //--
         List<PointValue> pointValueList = new ArrayList<>();
         PointValue pointValue5 = new PointValue(12, 41);
         pointValueList.add(pointValue5);
+
         PointValue pointValue6 = new PointValue(56, 35);
         pointValueList.add(pointValue6);
+
         PointValue pointValue7 = new PointValue(50, 12);
         pointValueList.add(pointValue7);
+
         PointValue pointValue8 = new PointValue(80, 80);
         pointValueList.add(pointValue8);
 
@@ -137,58 +143,61 @@ public class MainActivity extends AppCompatActivity {
         //line.setCubic(true);
         lines.add(line4);
         //--- add data list 5 lines ---//
-        addArrayLines(lines);
+        try{
+            addArrayLines(lines, axisValues);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
 
-        line_chart_view.setLineChartData(data);
+            line_chart_view.setLineChartData(data);
 
-        Viewport viewport = initViewPort();
+            Viewport viewport = initViewPort();
 
-        line_chart_view.startDataAnimation(300);
-        line_chart_view.setMaximumViewport(viewport);
-        line_chart_view.setCurrentViewport(viewport);
+            line_chart_view.startDataAnimation(300);
+            line_chart_view.setMaximumViewport(viewport);
+            line_chart_view.setCurrentViewport(viewport);
+            line_chart_view.setViewportCalculationEnabled(false);
+
+        }
+
     }
 
 
-    private void addArrayLines(List<Line> Lines){
+    private void addArrayLines(List<Line> Lines, List<AxisValue> axisValues) {
 
-        try{
-            if(Lines.size()>0 && !Lines.isEmpty()){
-                for(int i=0;i<Lines.size();i++){
+        try {
+            if (Lines.size() > 0 && !Lines.isEmpty()) {
+                for (int i = 0; i < Lines.size(); i++) {
                     Line line = Lines.get(i);
                     //line1.setShape(ValueShape.CIRCLE);
                     line.setHasPoints(false);
                     //line1.setFilled(false);
                     line.setStrokeWidth(2);
 
-                    if(i==0){
+                    if (i == 0) {
                         line.setColor(getResources().getColor(R.color.colorRed));
-                    }
-                    else if(i==1){
+                    } else if (i == 1) {
                         line.setColor(getResources().getColor(R.color.colorGreen));
-                    }
-                    else if(i==2){
+                    } else if (i == 2) {
                         line.setColor(getResources().getColor(R.color.colorBlue));
-                    }
-                    else if(i==3){
+                    } else if (i == 3) {
                         line.setColor(getResources().getColor(R.color.colorBlack));
-                    }
-                    else if(i==4){
+                    } else if (i == 4) {
                         line.setColor(getResources().getColor(R.color.colorBrown));
-                    }
-                    else{
+                    } else {
                         line.setColor(getResources().getColor(R.color.colorNeutral));
                     }
                 }
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            data = initData(Lines);
+        } finally {
+            data = initData(Lines, axisValues);
         }
 
-     }
+    }
 
     private Viewport initViewPort() {
         Viewport viewport = new Viewport();
@@ -200,9 +209,11 @@ public class MainActivity extends AppCompatActivity {
         return viewport;
     }
 
-    private LineChartData initData(List<Line> lines) {
+    private LineChartData initData(List<Line> lines, List<AxisValue> axisValues) {
 
         LineChartData data = new LineChartData(lines);
+        data.setAxisXBottom(new Axis(axisValues).setHasLines(true));
+
         Axis axisX = new Axis();
         Axis axisY = new Axis();
 
