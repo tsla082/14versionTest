@@ -4,15 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.doapps.luis.a14versiontest.MainActivity"
     tools:showIn="@layout/activity_main"
     android:orientation="vertical"
-    android:background="#242454"
+    android:background="#ccccf4"
 >
     <TextView
         android:layout_width="wrap_content"
@@ -22,25 +18,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:padding="10dp"
         android:orientation="vertical">
-        <!--
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            <view
-                android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                class="im.dacer.androidcharts.LineView"
-                android:id="@+id/line_view" />
-        </HorizontalScrollView>
 
-        -->
         <lecho.lib.hellocharts.view.LineChartView
             android:id="@+id/chart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:background="#fff"
+            />
 
     </LinearLayout>
 

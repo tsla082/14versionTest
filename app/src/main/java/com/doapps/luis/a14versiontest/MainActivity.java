@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.gesture.ContainerScrollType;
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.model.Axis;
@@ -26,6 +27,8 @@ import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.Chart;
 import lecho.lib.hellocharts.view.LineChartView;
 
 //import im.dacer.androidcharts.LineView;
@@ -34,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     private LineChartView line_chart_view;
     private LineChartData data;
-    private LineChartData data1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         /**
@@ -52,150 +55,167 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
-
-
         line_chart_view = (LineChartView) findViewById(R.id.chart);
 
-        List<Line> lines = initLine();
+         List<Line> lines = new ArrayList<Line>();
 
-        data = initData(lines);
         //--
         List<PointValue> pointValueList = new ArrayList<>();
-        PointValue pointValue1 = new PointValue(10, 30);
-        pointValueList.add(pointValue1);
-        PointValue pointValue2 = new PointValue(25, 20);
-        pointValueList.add(pointValue2);
-        PointValue pointValue3 = new PointValue(23, 70);
-        pointValueList.add(pointValue3);
-        PointValue pointValue4 = new PointValue(13, 69);
-        pointValueList.add(pointValue4);
         PointValue pointValue5 = new PointValue(12, 41);
         pointValueList.add(pointValue5);
         PointValue pointValue6 = new PointValue(56, 35);
         pointValueList.add(pointValue6);
         PointValue pointValue7 = new PointValue(50, 12);
         pointValueList.add(pointValue7);
-        PointValue pointValue8 = new PointValue(80, 100);
+        PointValue pointValue8 = new PointValue(80, 80);
         pointValueList.add(pointValue8);
 
         Line line = new Line(pointValueList);
-        line.setColor(getResources().getColor(R.color.colorPrimary));
-        line.setShape(ValueShape.DIAMOND);
-
+        //line.setCubic(true);
         lines.add(line);
 
 
         List<PointValue> pointValueList1 = new ArrayList<>();
         PointValue pointValue11 = new PointValue(10, 30);
-        pointValueList.add(pointValue11);
+        pointValueList1.add(pointValue11);
         PointValue pointValue22 = new PointValue(20, 20);
-        pointValueList.add(pointValue22);
+        pointValueList1.add(pointValue22);
         PointValue pointValue33 = new PointValue(30, 70);
-        pointValueList.add(pointValue33);
+        pointValueList1.add(pointValue33);
         PointValue pointValue44 = new PointValue(40, 69);
-        pointValueList.add(pointValue44);
-        PointValue pointValue55 = new PointValue(50, 64);
-        pointValueList.add(pointValue55);
-        PointValue pointValue66 = new PointValue(60, 31);
-        pointValueList.add(pointValue66);
-        PointValue pointValue77 = new PointValue(70, 22);
-        pointValueList.add(pointValue77);
-        PointValue pointValue88 = new PointValue(80, 100);
-        pointValueList1.add(pointValue88);
+        pointValueList1.add(pointValue44);
 
 
-        Line line1 = new Line(pointValueList);
-        line1.setColor(getResources().getColor(R.color.colorAccent));
-        line1.setShape(ValueShape.CIRCLE);
-        lines.add(line);
+        Line line1 = new Line(pointValueList1);
+        //line.setCubic(true);
+        lines.add(line1);
+
+        List<PointValue> pointValueList11 = new ArrayList<>();
+        PointValue pointValue111 = new PointValue(14, 30);
+        pointValueList11.add(pointValue111);
+        PointValue pointValue222 = new PointValue(25, 22);
+        pointValueList11.add(pointValue222);
+        PointValue pointValue333 = new PointValue(31, 75);
+        pointValueList11.add(pointValue333);
+        PointValue pointValue444 = new PointValue(43, 65);
+        pointValueList11.add(pointValue444);
 
 
-        //---
+        Line line2 = new Line(pointValueList11);
+        //line.setCubic(true);
+        lines.add(line2);
+
+
+        List<PointValue> pointValueLista = new ArrayList<>();
+        PointValue pointValuea = new PointValue(14, 50);
+        pointValueLista.add(pointValuea);
+        PointValue pointValueaa = new PointValue(35, 42);
+        pointValueLista.add(pointValueaa);
+        PointValue pointValueaaa = new PointValue(41, 15);
+        pointValueLista.add(pointValueaaa);
+        PointValue pointValueaaaa = new PointValue(53, 55);
+        pointValueLista.add(pointValueaaaa);
+
+
+        Line line3 = new Line(pointValueLista);
+        //line.setCubic(true);
+        lines.add(line3);
+
+
+        List<PointValue> pointValueListb = new ArrayList<>();
+        PointValue pointValueb = new PointValue(12, 54);
+        pointValueListb.add(pointValueb);
+        PointValue pointValuebb = new PointValue(34, 45);
+        pointValueListb.add(pointValuebb);
+        PointValue pointValuebbb = new PointValue(42, 16);
+        pointValueListb.add(pointValuebbb);
+        PointValue pointValuebbbb = new PointValue(54, 55);
+        pointValueListb.add(pointValuebbbb);
+
+
+        Line line4 = new Line(pointValueListb);
+        //line.setCubic(true);
+        lines.add(line4);
+        //--- add data list 5 lines ---//
+        addArrayLines(lines);
+
         line_chart_view.setLineChartData(data);
 
         Viewport viewport = initViewPort();
 
+        line_chart_view.startDataAnimation(300);
         line_chart_view.setMaximumViewport(viewport);
         line_chart_view.setCurrentViewport(viewport);
     }
+
+
+    private void addArrayLines(List<Line> Lines){
+
+        try{
+            if(Lines.size()>0 && !Lines.isEmpty()){
+                for(int i=0;i<Lines.size();i++){
+                    Line line = Lines.get(i);
+                    //line1.setShape(ValueShape.CIRCLE);
+                    line.setHasPoints(false);
+                    //line1.setFilled(false);
+                    line.setStrokeWidth(2);
+
+                    if(i==0){
+                        line.setColor(getResources().getColor(R.color.colorRed));
+                    }
+                    else if(i==1){
+                        line.setColor(getResources().getColor(R.color.colorGreen));
+                    }
+                    else if(i==2){
+                        line.setColor(getResources().getColor(R.color.colorBlue));
+                    }
+                    else if(i==3){
+                        line.setColor(getResources().getColor(R.color.colorBlack));
+                    }
+                    else if(i==4){
+                        line.setColor(getResources().getColor(R.color.colorBrown));
+                    }
+                    else{
+                        line.setColor(getResources().getColor(R.color.colorNeutral));
+                    }
+                }
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            data = initData(Lines);
+        }
+
+     }
 
     private Viewport initViewPort() {
         Viewport viewport = new Viewport();
         viewport.top = 100;
         viewport.bottom = 0;
         viewport.left = 0;
-        viewport.right = 90;
+        viewport.right = 80;
 
         return viewport;
-    }
-
-    private List<Line> initLine() {
-        List<Line> lineList = new ArrayList<>();
-
-        List<PointValue> pointValueList = new ArrayList<>();
-        PointValue pointValue1 = new PointValue(10, 30);
-        pointValueList.add(pointValue1);
-        PointValue pointValue2 = new PointValue(20, 20);
-        pointValueList.add(pointValue2);
-        PointValue pointValue3 = new PointValue(30, 70);
-        pointValueList.add(pointValue3);
-        PointValue pointValue4 = new PointValue(40, 69);
-        pointValueList.add(pointValue4);
-        PointValue pointValue5 = new PointValue(50, 64);
-        pointValueList.add(pointValue5);
-        PointValue pointValue6 = new PointValue(60, 31);
-        pointValueList.add(pointValue6);
-        PointValue pointValue7 = new PointValue(70, 22);
-        pointValueList.add(pointValue7);
-        PointValue pointValue8 = new PointValue(80, 100);
-        pointValueList.add(pointValue8);
-
-
-        Line line = new Line(pointValueList);
-        line.setColor(getResources().getColor(R.color.colorAccent));
-        line.setShape(ValueShape.CIRCLE);
-        lineList.add(line);
-
-        return lineList;
-    }
-
-    private List<Line> initLine1() {
-        List<Line> lineList = new ArrayList<>();
-
-        List<PointValue> pointValueList = new ArrayList<>();
-        PointValue pointValue1 = new PointValue(10, 30);
-        pointValueList.add(pointValue1);
-        PointValue pointValue2 = new PointValue(25, 20);
-        pointValueList.add(pointValue2);
-        PointValue pointValue3 = new PointValue(23, 70);
-        pointValueList.add(pointValue3);
-        PointValue pointValue4 = new PointValue(13, 69);
-        pointValueList.add(pointValue4);
-        PointValue pointValue5 = new PointValue(12, 41);
-        pointValueList.add(pointValue5);
-        PointValue pointValue6 = new PointValue(56, 35);
-        pointValueList.add(pointValue6);
-        PointValue pointValue7 = new PointValue(50, 12);
-        pointValueList.add(pointValue7);
-        PointValue pointValue8 = new PointValue(80, 100);
-        pointValueList.add(pointValue8);
-
-        Line line = new Line(pointValueList);
-        line.setColor(getResources().getColor(R.color.colorPrimary));
-        line.setShape(ValueShape.DIAMOND);
-        lineList.add(line);
-
-        return lineList;
     }
 
     private LineChartData initData(List<Line> lines) {
 
         LineChartData data = new LineChartData(lines);
         Axis axisX = new Axis();
-        Axis axisY = new Axis().setHasLines(true);
+        Axis axisY = new Axis();
 
-        axisX.setName("时间");
-        axisY.setName("销量");
+        axisX.setTextColor(Color.BLACK);
+        axisX.setLineColor(Color.BLACK);
+        axisX.setHasLines(true);
+
+        axisY.setTextColor(Color.BLACK);
+        axisY.setLineColor(Color.BLACK);
+        axisY.setHasLines(true);
+
+        axisX.setName("Dias");
+        axisY.setName("Alturas Arbitrarias");
 
         data.setAxisYLeft(axisY);
         data.setAxisXBottom(axisX);
