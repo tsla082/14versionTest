@@ -50,14 +50,17 @@ public class MainActivity extends AppCompatActivity {
         line_chart_view = (LineChartView) findViewById(R.id.chart);
 
         List<AxisValue> axisValues = new ArrayList<AxisValue>();
-        axisValues.add(new AxisValue(0).setLabel("A"));
-        axisValues.add(new AxisValue(1).setLabel("B"));
-        axisValues.add(new AxisValue(2).setLabel("C"));
-        axisValues.add(new AxisValue(3).setLabel("D"));
-        axisValues.add(new AxisValue(4).setLabel("E"));
-        axisValues.add(new AxisValue(5).setLabel("E"));
-        axisValues.add(new AxisValue(6).setLabel("E"));
-        axisValues.add(new AxisValue(7).setLabel("E"));
+        axisValues.add(new AxisValue(0).setLabel("-A-"));
+        axisValues.add(new AxisValue(10).setLabel("A"));
+        axisValues.add(new AxisValue(20).setLabel("B"));
+        axisValues.add(new AxisValue(30).setLabel("C"));
+        axisValues.add(new AxisValue(40).setLabel("D"));
+        axisValues.add(new AxisValue(50).setLabel("E"));
+        axisValues.add(new AxisValue(60).setLabel("f"));
+        axisValues.add(new AxisValue(70).setLabel("g"));
+        axisValues.add(new AxisValue(80).setLabel("h"));
+        axisValues.add(new AxisValue(90).setLabel("i"));
+        axisValues.add(new AxisValue(100).setLabel("j"));
 
 
         List<Line> lines = new ArrayList<Line>();
@@ -143,13 +146,8 @@ public class MainActivity extends AppCompatActivity {
         //line.setCubic(true);
         lines.add(line4);
         //--- add data list 5 lines ---//
-        try{
-            addArrayLines(lines, axisValues);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        finally {
+             addArrayLines(lines, axisValues);
+
 
             line_chart_view.setLineChartData(data);
 
@@ -160,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
             line_chart_view.setCurrentViewport(viewport);
             line_chart_view.setViewportCalculationEnabled(false);
 
-        }
 
     }
 
@@ -204,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         viewport.top = 100;
         viewport.bottom = 0;
         viewport.left = 0;
-        viewport.right = 80;
+        viewport.right = 100;
 
         return viewport;
     }
@@ -212,9 +209,8 @@ public class MainActivity extends AppCompatActivity {
     private LineChartData initData(List<Line> lines, List<AxisValue> axisValues) {
 
         LineChartData data = new LineChartData(lines);
-        data.setAxisXBottom(new Axis(axisValues).setHasLines(true));
-
-        Axis axisX = new Axis();
+        /*
+        Axis axisX = new Axis(axisValues);
         Axis axisY = new Axis();
 
         axisX.setTextColor(Color.BLACK);
@@ -230,6 +226,21 @@ public class MainActivity extends AppCompatActivity {
 
         data.setAxisYLeft(axisY);
         data.setAxisXBottom(axisX);
+        */
+        data.setAxisXBottom(new Axis(axisValues)
+                .setHasLines(true)
+                .setLineColor(Color.BLACK)
+                .setTextColor(Color.BLACK)
+                .setName("Dias")
+        );
+
+        data.setAxisYLeft(new Axis()
+                .setHasLines(true)
+                .setLineColor(Color.BLACK)
+                .setTextColor(Color.BLACK)
+                .setMaxLabelChars(3)
+                .setName("Alturas Arbitrarias")
+        );
 
         return data;
     }
