@@ -27,6 +27,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
     private LineChartView line_chart_view;
     private LineChartData data;
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * method to initialize ui elements
      */
-    private void init(){
+    private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         line_chart_view = (LineChartView) findViewById(R.id.chart);
@@ -66,27 +67,26 @@ public class MainActivity extends AppCompatActivity {
     /**
      * method to initialize ui elements events
      */
-    private void initUIEvents(){
+    private void initUIEvents() {
         studentService.initGetAllStudentInterface(new StudentService.studentGetAllInterface() {
             @Override
             public void IgetAllStudents(JSONArray jsonArray) {
                 try {
-                    Log.e(TAG,"cantidad de datos en el array : "+jsonArray.length());
+                    Log.e(TAG, "cantidad de datos en el array : " + jsonArray.length());
                     String id = "";
                     pointValueList_ = new ArrayList<PointValue>();
                     //Line line_ = null;
 
-                    for(int i = 0; i < jsonArray.length(); i++){
-                        JSONObject obj=(JSONObject) jsonArray.get(i);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject obj = (JSONObject) jsonArray.get(i);
                         Student student = new Student();
                         student.setId(obj.getString("id"));
                         student.setName(obj.getString("name"));
                         student.setScore(obj.getString("score"));
 
-                        if (!student.getName().isEmpty() && !student.getId().isEmpty() &&  !student.getScore().isEmpty()) {
+                        if (!student.getName().isEmpty() && !student.getId().isEmpty() && !student.getScore().isEmpty()) {
                             pointValueList_.add(new PointValue(i * 10, Integer.parseInt(student.getScore())));
-                        }
-                        else {
+                        } else {
                             Log.d(TAG, "pos : " + i + " id or name were empty");
                         }
                     }
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     lineChartUtil.addDataLine(xValues, lines);
                     line_chart_view.setLineChartData(lineChartUtil.data);
 
-                    Viewport viewport = lineChartUtil.initViewPort(300,300);
+                    Viewport viewport = lineChartUtil.initViewPort(300, 300);
 
                     line_chart_view.startDataAnimation(300);
                     line_chart_view.setMaximumViewport(viewport);
