@@ -1,15 +1,11 @@
 package com.doapps.luis.a14versiontest.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.doapps.luis.a14versiontest.R;
 import com.doapps.luis.a14versiontest.beanDTO.Student;
@@ -22,9 +18,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
@@ -40,14 +33,27 @@ public class MainActivity extends AppCompatActivity {
     private LineChartUtil lineChartUtil;
     private StudentService studentService;
 
-    List<Line> lines = new ArrayList<Line>();
-    List<PointValue> pointValueList_;
+    private List<Line> lines = new ArrayList<Line>();
+    private List<PointValue> pointValueList_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initUIEvents();
+    }
+
+    /**
+     * method to initialize ui elements
+     */
+    private void init(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         line_chart_view = (LineChartView) findViewById(R.id.chart);
@@ -55,12 +61,17 @@ public class MainActivity extends AppCompatActivity {
         lineChartUtil = new LineChartUtil(MainActivity.this, data);
         studentService = new StudentService(MainActivity.this);
         studentService.getAllStudents();
+    }
 
-
+    /**
+     * method to initialize ui elements events
+     */
+    private void initUIEvents(){
         studentService.initGetAllStudentInterface(new StudentService.studentGetAllInterface() {
             @Override
             public void IgetAllStudents(JSONArray jsonArray) {
                 try {
+                    Log.e(TAG,"cantidad de datos en el array : "+jsonArray.length());
                     String id = "";
                     pointValueList_ = new ArrayList<PointValue>();
                     //Line line_ = null;
@@ -74,20 +85,11 @@ public class MainActivity extends AppCompatActivity {
 
                         if (!student.getName().isEmpty() && !student.getId().isEmpty() &&  !student.getScore().isEmpty()) {
                             pointValueList_.add(new PointValue(i * 10, Integer.parseInt(student.getScore())));
-
                         }
                         else {
                             Log.d(TAG, "pos : " + i + " id or name were empty");
                         }
                     }
-
-
-
-                } catch (Exception e) {
-                    e.getMessage();
-                    e.printStackTrace();
-                }
-                finally {
 
                     Line line_ = new Line(pointValueList_);
                     lines.add(line_);
@@ -128,17 +130,19 @@ public class MainActivity extends AppCompatActivity {
                     lineChartUtil.addDataLine(xValues, lines);
                     line_chart_view.setLineChartData(lineChartUtil.data);
 
-                    Viewport viewport = lineChartUtil.initViewPort();
+                    Viewport viewport = lineChartUtil.initViewPort(300,300);
 
                     line_chart_view.startDataAnimation(300);
                     line_chart_view.setMaximumViewport(viewport);
                     line_chart_view.setCurrentViewport(viewport);
                     line_chart_view.setViewportCalculationEnabled(false);
+
+                } catch (Exception e) {
+                    e.getMessage();
+                    e.printStackTrace();
                 }
             }
         });
-        //-----------------------------------------
-
     }
 
     /**
