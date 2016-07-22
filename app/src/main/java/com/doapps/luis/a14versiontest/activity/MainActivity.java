@@ -81,38 +81,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-                    /*
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        JSONObject obj=(JSONObject) jsonArray.get(i);
-                        Student student = new Student();
-                        student.setId(obj.getString("id"));
-                        student.setName(obj.getString("name"));
-                        student.setScore(obj.getString("score"));
-
-                       // if (!student.getName().isEmpty() && !student.getId().isEmpty() &&  !student.getScore().isEmpty()) {
-                        if (  !student.getScore().isEmpty()) {
-
-                            if (!id.equals(student.getId())) {
-                                // instance new object
-                                pointValueList_ = new ArrayList<PointValue>();
-                                pointValueList_.add(new PointValue(i * 10, Integer.parseInt(student.getScore())));
-                                line_ = new Line(pointValueList_);
-                                lines.add(line_);
-
-                                id = student.getId();
-                            } else {
-                                //normal process
-                                id = student.getId();
-                                pointValueList_.add(new PointValue(i * 10, Integer.parseInt(student.getScore())));
-                                lines.add(line_);
-                            }
-
-                        } else {
-                            Log.d(TAG, "pos : " + i + " id or name were empty");
-                        }
-                    }
-                    */
 
 
                 } catch (Exception e) {
@@ -171,109 +139,7 @@ public class MainActivity extends AppCompatActivity {
         });
         //-----------------------------------------
 
-        /*/--
-        List<PointValue> pointValueList = new ArrayList<PointValue>();
-        PointValue pointValue5 = new PointValue(12, 41);
-        pointValueList.add(pointValue5);
-
-        PointValue pointValue6 = new PointValue(56, 35);
-        pointValueList.add(pointValue6);
-
-        PointValue pointValue7 = new PointValue(50, 12);
-        pointValueList.add(pointValue7);
-
-        PointValue pointValue8 = new PointValue(80, 80);
-        pointValueList.add(pointValue8);
-
-        Line line = new Line(pointValueList);
-        lines.add(line);
-
-
-        List<PointValue> pointValueList1 = new ArrayList<PointValue>();
-        PointValue pointValue11 = new PointValue(10, 30);
-        pointValueList1.add(pointValue11);
-        PointValue pointValue22 = new PointValue(20, 20);
-        pointValueList1.add(pointValue22);
-        PointValue pointValue33 = new PointValue(30, 70);
-        pointValueList1.add(pointValue33);
-        PointValue pointValue44 = new PointValue(40, 69);
-        pointValueList1.add(pointValue44);
-
-
-        Line line1 = new Line(pointValueList1);
-        lines.add(line1);
-
-        List<PointValue> pointValueList11 = new ArrayList<PointValue>();
-        PointValue pointValue111 = new PointValue(14, 30);
-        pointValueList11.add(pointValue111);
-        PointValue pointValue222 = new PointValue(25, 22);
-        pointValueList11.add(pointValue222);
-        PointValue pointValue333 = new PointValue(31, 75);
-        pointValueList11.add(pointValue333);
-        PointValue pointValue444 = new PointValue(43, 65);
-        pointValueList11.add(pointValue444);
-
-
-        Line line2 = new Line(pointValueList11);
-        lines.add(line2);
-
-
-        List<PointValue> pointValueLista = new ArrayList<PointValue>();
-        PointValue pointValuea = new PointValue(14, 50);
-        pointValueLista.add(pointValuea);
-        PointValue pointValueaa = new PointValue(35, 42);
-        pointValueLista.add(pointValueaa);
-        PointValue pointValueaaa = new PointValue(41, 15);
-        pointValueLista.add(pointValueaaa);
-        PointValue pointValueaaaa = new PointValue(53, 55);
-        pointValueLista.add(pointValueaaaa);
-
-
-        Line line3 = new Line(pointValueLista);
-        lines.add(line3);
-
-
-        List<PointValue> pointValueListb = new ArrayList<PointValue>();
-        PointValue pointValueb = new PointValue(12, 54);
-        pointValueListb.add(pointValueb);
-        PointValue pointValuebb = new PointValue(34, 45);
-        pointValueListb.add(pointValuebb);
-        PointValue pointValuebbb = new PointValue(42, 16);
-        pointValueListb.add(pointValuebbb);
-        PointValue pointValuebbbb = new PointValue(54, 55);
-        pointValueListb.add(pointValuebbbb);
-
-
-        Line line4 = new Line(pointValueListb);
-        lines.add(line4);
-        //-----------------------------------------
-        ArrayList<String> xValues = new ArrayList<String>();
-        xValues.add("0");
-        xValues.add("1");
-        xValues.add("2");
-        xValues.add("3");
-        xValues.add("4");
-        xValues.add("5");
-        xValues.add("6");
-        xValues.add("7");
-        xValues.add("8");
-        xValues.add("9");
-        xValues.add("10");
-        //----------------------------------------- */
-
-        // lineChartUtil.addDataLine(xValues, lines);
-
-        //line_chart_view.setLineChartData(lineChartUtil.data);
-
-       /* Viewport viewport = lineChartUtil.initViewPort();
-
-        line_chart_view.startDataAnimation(300);
-        line_chart_view.setMaximumViewport(viewport);
-        line_chart_view.setCurrentViewport(viewport);
-        line_chart_view.setViewportCalculationEnabled(false);
-        */
     }
-
 
     /**
      * default activity template method
